@@ -230,6 +230,21 @@
   .meta a:hover { color: var(--accent); }
   .meta .k { color: var(--faint); user-select: none; }
 
+  .cv-btn {
+    display: block;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.04em;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--accent);
+    color: var(--ground);
+    border: 1px solid var(--accent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .cv-btn:hover { text-decoration: none; transform: translateY(-1px); box-shadow: var(--glow); }
+
   .rail-nav {
     display: flex;
     flex-direction: column;
@@ -385,7 +400,24 @@
     touch-action: pan-y;
   }
   .vis-stage canvas:active { cursor: grabbing; }
-  .orbit-chips { position: absolute; inset: 0; pointer-events: none; }
+  .orbit-chips { position: absolute; inset: 0; pointer-events: none; z-index: 2; }
+  .orbit-tags { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+  .orbit-tag {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-family: var(--mono);
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 999px;
+    border: 1px dashed var(--line-strong);
+    color: var(--faint);
+    background: var(--ground);
+    white-space: nowrap;
+    will-change: transform, opacity;
+  }
   .orbit-chip {
     position: absolute;
     left: 0;
@@ -838,6 +870,8 @@
         <span><span class="k">edu&nbsp;&nbsp;</span><span data-i18n="meta.edu">U-TAD · Class of 2026</span></span>
       </div>
 
+      <a class="cv-btn" id="cvBtn" href="https://rubensaf.github.io/portfolio/cv-en.pdf" data-i18n="cv.btn">Download CV (PDF)</a>
+
       <nav class="rail-nav" aria-label="Sections">
         <a href="#about"><span class="idx">01</span><span data-i18n="nav.about">about</span></a>
         <a href="#experience"><span class="idx">02</span><span data-i18n="nav.xp">experience</span></a>
@@ -879,6 +913,7 @@
         <div class="hero-vis">
           <div class="vis-stage">
             <canvas id="net3d" aria-label="Interactive 3D map of the portfolio" role="img"></canvas>
+            <div class="orbit-tags" aria-hidden="true"></div>
             <div class="orbit-chips"></div>
             <div class="vis-pop" role="dialog" aria-hidden="true">
               <button class="vis-pop-x" type="button" aria-label="Close">×</button>
@@ -1097,6 +1132,7 @@
   var I18N = {
     en: {
       "role": "software engineer · security + AI",
+      "cv.btn": "Download CV (PDF)",
       "meta.loc": "Madrid, Spain",
       "meta.edu": "U-TAD · Class of 2026",
       "nav.about": "about",
@@ -1189,6 +1225,7 @@
     },
     es: {
       "role": "ingeniero de software · seguridad + IA",
+      "cv.btn": "Descargar CV (PDF)",
       "meta.loc": "Madrid, España",
       "meta.edu": "U-TAD · Promoción 2026",
       "nav.about": "sobre mí",
@@ -1281,6 +1318,7 @@
     },
     de: {
       "role": "software engineer · cybersecurity + KI",
+      "cv.btn": "CV herunterladen (PDF)",
       "meta.loc": "Madrid, Spanien",
       "meta.edu": "U-TAD · Abschluss 2026",
       "nav.about": "über mich",
@@ -1388,6 +1426,8 @@
     document.querySelectorAll(".lang-switch button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
     });
+    var cvB = document.getElementById("cvBtn");
+    if (cvB) cvB.setAttribute("href", "https://rubensaf.github.io/portfolio/cv-" + lang + ".pdf");
     langHooks.forEach(function (f) { f(lang); });
   }
   document.querySelectorAll(".lang-switch button").forEach(function (b) {
@@ -1453,19 +1493,31 @@
 
     function rgba(c, a) { return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
 
-    // dotted globe geometry
-    var dots = [];
-    for (var lat = -80; lat <= 80; lat += 8) {
-      var phi = lat * Math.PI / 180;
-      var ringR = Math.cos(phi);
-      var steps = Math.max(6, Math.round(44 * ringR));
-      for (var li = 0; li < steps; li++) {
-        var lam = (li / steps) * Math.PI * 2 + ((lat / 8) % 2 ? Math.PI / steps : 0);
-        dots.push({ x: Math.cos(phi) * Math.cos(lam), y: Math.sin(phi), z: Math.cos(phi) * Math.sin(lam) });
+    // planet Earth: packed land/ocean dots (2 bytes each: lat, lon) sampled from Natural Earth 110m
+    var EARTH_LAND = "AQABJAFJAW0BkgG2AdsGHQYxBkUGWAZsBoAGkwanBroGzgbiBvUKGgomCjMKQApMCnMKgAqMCpkKpgqyCr8KzArZCuYOGQ4iDiwONg5ADkoOcQ57DoQOjg6YDqIOrA61Dr8OyQ7TDt0O5g7wEx8TJxMuEzYTPhNGE00TdBN8E4MTixOTE5sTohOqE7ITuRPBE8kT0RPYE+AT6BPwFzgXSxdSF3kXgBeGF40XkxeaF6AXpxetF7QXuhfBF8cXzhfUF9sX4hfoF+8X9RxPHJ8cpByqHLAcuxzBHMYczBzSHNcc3RzjHOggUjFONk06SjpNOlA+TT5QPvZDTUNQQ+hHTkdRR1NH/EtMS09LUUtUS1ZL4kvlS+dL6lBNUE9QUlBUUFdQWVCOUJBQk1DUUNZQ4FDiUOVQ51DpVE5UUVRTVFVUWFRaVI5UkFSSVJVU0VTUVNZU2FTbVN1U31TiVORU5lTpVOtYTVhQWFJYVFhXWFlYW1iLWI1Yj1iSWJRYlljRWNRY1ljYWNtY3VjfWOFY5FjmWOhY611PXVFdU11VXVhdWl1cXV5di12NXY9dkV2TXZZdmF2fXaFd0l3UXdZd2F3aXd1d313hXeNd5l3oXephUGFSYVRhVmFZYVthXWFfYWFhimGMYY9hkWGTYZVhl2GgYdRh1mHYYdph3GHfYeFh42HlYedh9GVOZVBlUmVUZVZlWGVaZVxlX2VhZWNliWWLZY1lj2WSZZRllmWYZaBl2GXaZdxl3mXgZeJl5GXnZf5qS2pNak9qUmpUalZqWGpaalxqXmpgamJqimqMao5qkGqSapRqlmqZaptqoWqjatlq22reauZuSm5Mbk5uUG5SblRuVm5YblpuXG5ebmBuYm5lbopujG6ObpBukm6UbpZumG6abt9ySHJKckxyTnJQclJyVHJWclhyWnJdcl9yYXJjcmVyinKMco5ykHKScpRylnKYcppy2HLkcuh3RndId0p3THdPd1F3U3dVd1d3WXdbd113X3dhd2N3ZXeKd4x3jneQd5J3lHeWd5h3mnfLd+N35nfod+p7R3tJe0t7TXtPe1F7U3tVe1d7WXtbe117X3the2N7iHuKe4x7jnuQe5J7lHuWe5h7mnuce8h7ynvOe9B71Hvbe9974Xvje+uASIBKgEyAToBQgFKAVIBWgFiAWoCHgImAi4CNgI+AkYCTgJWAl4CZgJuAnYDHgM2Az4DRhEmES4RNhE+EUYRThFWEV4RZhFuEiISKhIyEjoSQhJKElISWhJiEmoSchJ6EoITIhNCE0ohKiEyIT4hRiFOIVYhXiHmIe4h9iICIhIiGiIiIioiMiI6IkIiSiJSIloiYiJqInIieiKCIoojHjUiNSo1MjU6NUI1SjVSNd415jXuNfY2AjYKNhI2GjYiNio2MjY6NkI2SjZSNlo2YjZqNnI2ejaCNoo23jcWRQ5F1kXeReZF7kX2RgJGCkYSRhpGIkYqRjJGOkZCRkpGUkZaRmJGakZ2RtZG3kcaRypHMlT+VQZVDlXWVd5V5lXuVfZWAlYKVhJWGlYiVipWMlY6VkJWSlZSVlpWZlZuVn5WhlaOVtpW4lceVyZXLldWaOJo6mj2aP5pBmkmadpp4mnqafJp+moGag5qFmoeaiZqLmo2aj5qSmpSalpqYmpqanpqgmqOapZqnmrSatpq4mrqawprFmseayZrWnjaeOJ46nkGeSZ51nneeeZ57nn2egJ6CnoSehp6InoqejJ6PnpGek56VnpeemZ6cnp6eoJ6inqSepp6pnrOetp64nrqevJ7CnsWex57JnsuezaI0ojaiOaJ0oneieaJ7on2igKKCooSihqKIoouijaKPopGik6KWopiinKKfoqGio6KloqeisKKyorWit6K5oruivqLAosKixKLGosmiy6LNos+i0qcwpzKnNKc3pzmnR6d2p3mne6d9p4CngqeEp4aniaeLp42nj6eSp5Snlqebp52nn6eip6anqKerp62nr6eyp7Sntqe4p7unvae/p8KnxKfGp8iny6fNp8+n0afUqy6rMKsyqzWrN6s5qzyrPqtFq3urfauAq4KrhKuHq4mri6uOq5CrkquVq5ermaucq56roKulq6erqqusq66rsauzq7WruKu6q7yrv6vBq8OrxqvIq8qrzavPq9Gr1K8urzCvM681rzevOq88rz+vQa9Dr0ave699r4Cvgq+Er4evmq+cr5+voa+kr6avqK+rr62vsK+yr7Svt6+5r7yvvq/Ar8Ovxa/Ir8qvzK/Pr9Gv1K/dtCy0LrQxtDO0NrQ4tDu0PbRAtEK0RbRHtEq0gbSDtIa0mrSctJ+0obSktKa0qbSrtK60sLSztLW0uLS6tL20v7TCtMS0x7TJtMy0zrTRtNO027TiuCq4LLgvuDG4NLg3uDm4PLg+uEG4RLhGuEm4erh9uI+4lLiXuJq4nLifuKG4p7ipuKy4rrixuLS4tri5uLu4vrjBuMO4xrjIuMu4zrjQuNO41bwqvC28L7wyvDW8OLw6vD28QLxCvEW8SLxLvE28e7x+vIG8ibyOvJG8n7yhvKe8qrysvK+8sry0vLe8ury9vL+8wrzFvMe8yrzNvNC80rzVvNi82sEowSvBLsExwTTBNsE5wTzBP8FCwUXBSMFKwU3BU8GBwYTBh8GMwY/BksGYwZvBnsGgwabBqcGswa/BssG1wbfBusG9wcDBw8HGwcnBy8HOwdHB1MHXwdrB3cHfxSnFLMUvxTLFNcU4xTvFPsVBxUTFR8VKxU3FUMVXxVrFfsWBxYTFh8WKxY3FkMWTxZbFmcWcxZ/FosWlxajFrMWvxbLFtcW4xbvFvsXBxcTFx8XKxc3F0MXTxdbF2cXcxd/F4sknySrJLckwyTTJN8k6yT3JQclEyUfJSslNyVHJVMlXyX7JgcmEyYjJi8mOyZHJlMmYyZvJnsmhyaXJqMmrya7Jssm1ybjJu8m+ycLJxcnIycvJz8nSydXJ2Mnbyd/J4snlziTOKM4rzi/OMs41zjnOPM5AzkPOSs5OzlHOVM56zn7OiM6Mzo/Oks6WzpnOnc6gzqTOp86rzq7Osc61zrjOvM6/zsPOxs7Kzs3O0M7UztfO287ezuLO79IS0iHSJdIp0izSMNI00jfSO9I/0krSTtJR0n7SidKQ0pTSmNKb0p/So9Km0qrSrtKx0rXSudK80sDSxNLI0svSz9LT0tbS2tLe0uHS8NYK1g7WEtYW1h7WItYm1irWL9Yz1jfWO9ZL1oTWiNaM1pDWmNac1qDWpNao1qzWsNa01rjWvNbA1sTWyNbM1tDW1NbZ1t3W4dbl1unW7dsN2xLbFtsb2x/bJNso2y3bMds22zrbP9tR217bhtuL24/blNuY253bodum26rbrtuz27fbvNvA28XbydvO29Lb19vb2+Db5Nvp2+3b8tv22/vfA98N3xLfFt8b3yDfJd8q3zDfNd853z7fTt9S31zfYt+K347flN+e36LfqN+s37Lftt+738Dfxt/K39Df1N/a397f5N/p3+7f89/43/zjC+MR4xfjHOMi4yjjM+M+40TjSuNP42DjZuNs447jk+OZ47Xju+PB48bjzOPS49fj3ePj4+jj7uP04/noMehF6FjoX+hl6Gzop+i66MHox+jO6NTo6OxG7F3sZOxs7KrswezJ7OjxU/Fd8WfxcfVM9Vn1ZvVz";
+    var EARTH_OCEAN = "DRANUBkAGRQZJxk7GWIZdhmxJAckFSQjJDIkQCROJFwkaiR4JIcklSSjJLEkvyTNJNwk6iT4MAAwCzAWMCEwLDA3MEMwWTBkMG8wejCFMJAwmzCmMLEwvDDIMNMw3jDpMPQ7BTsOOxg7ITsqOzQ7PTtHO1o7YzttO3Y7gDuJO5I7nDulO687uDvCO8s71DveO+c78Tv6RwBHCEcQRxlHIUcpRzFHOkdCR0pHWkdjR2tHc0d7R4RHjEeUR5xHpUetR7VHvUfFR85H1kfeR+ZH70f3UwRTC1MTUxpTIlMpUzFTOFNAU0dTXlNlU21TdFN8U4NTi1OaU6FTqVOwU7hTv1PHU85T7FP0U/teAF4HXg5eFV4cXiJeKV4wXjdePl5FXkxeZ15uXnVefF6DXqVerF6zXrpewV7IXs9e8V74agNqCmoQahdqHWokaipqMWo4aj5qRWplamxqcmp5aoBqhmqgaqdqrWq0arpqwWrHas5q1Griauhq72r1avx1AHUGdQ11E3UadSB1JnUtdTN1OXVAdUZ1bHVzdXl1gHWGdZ91pnWsdbJ1uXW/dcZ10nXZdd917HXydfmBA4EKgRCBFoEdgSOBKYEwgTaBPYFDgVyBY4FpgXCBdoF8gYOBo4Gpga+BtoG8gcKByYHcgeKB6YHvgfWB/I0AjQaNDY0TjRqNII0mjS2NM405jUCNRo1ZjWCNZo1sjXONpo2sjbKNv43MjdKN343mjeyN8o35mAOYCpgRmBeYHpglmCyYMphGmE2YVJhbmGGYaJhvmKuYspi/mM2Y05jamOGY6JjumPWY/KQApAekDqQVpBykI6QqpDKkQKRHpE6kVaRcpGOkaqRxpKqk1KTcpOOk6qTxpPivBK8LrxOvGq8irymvR69Pr1avXq9lr22vdK+Lr5Kv1q/dr+Wv7K/0r/u7ALsIuxG7Grsiu0y7Vbteu2a7brt3u4i73bvmu+679sYFxg/GGcYixlPGXcZnxnHGe8bmxvDG+tIA0gzSF9JG0l3SaNJ00oDS6NLz3gjeUt6A6QDpFelA6VXpgOmV6arp6vUV9UD1lfW/9eo=";
+    function decodeDots(b64, ocean) {
+      var bin = atob(b64), out = [];
+      for (var bi = 0; bi < bin.length; bi += 2) {
+        var la = (bin.charCodeAt(bi) / 255) * 176 - 88;
+        var lo = (bin.charCodeAt(bi + 1) / 255) * 360 - 180;
+        var phi = la * Math.PI / 180, lam = -lo * Math.PI / 180;
+        out.push({
+          x: Math.cos(phi) * Math.cos(lam),
+          y: -Math.sin(phi),
+          z: Math.cos(phi) * Math.sin(lam),
+          lat: la,
+          tw: !ocean && Math.random() < 0.13 ? 1 + Math.random() * 5 : 0,
+          ph: Math.random() * Math.PI * 2,
+          ocean: ocean
+        });
       }
+      return out;
     }
+    var dots = decodeDots(EARTH_LAND, false).concat(decodeDots(EARTH_OCEAN, true));
     // arcs travelling across the globe
     var arcs = [];
+    var pings = [];
     function randPoint() {
       var u = Math.random() * 2 - 1, th2 = Math.random() * Math.PI * 2;
       var rr = Math.sqrt(1 - u * u);
@@ -1533,7 +1585,31 @@
         ch.el.classList.toggle("active", activeHub === ch);
       }
     }
-    function renderStatic() { draw(16); positionChips(); }
+    var TECHS = ["AWS", "Docker", "Cloud", "SaaS", "AI", "CyberSec"];
+    var tagsWrap = document.querySelector(".orbit-tags");
+    var techTags = TECHS.map(function (name, ti) {
+      var el = document.createElement("span");
+      el.className = "orbit-tag";
+      el.textContent = name;
+      tagsWrap.appendChild(el);
+      return { el: el, ring: ti % 2, off: Math.PI * 2 * Math.floor(ti / 2) / 3 + (ti % 2) * 0.9 };
+    });
+    function ringPos(ring, ang) {
+      var tilt = ring === 0 ? 0.45 : -0.7;
+      var rr = 1.28 + ring * 0.14;
+      return { x: Math.cos(ang) * rr, y: Math.sin(ang) * Math.sin(tilt) * rr, z: Math.sin(ang) * Math.cos(tilt) * rr };
+    }
+    function positionTags() {
+      for (var ti = 0; ti < techTags.length; ti++) {
+        var tg = techTags[ti];
+        var ang = tg.off + frame * (tg.ring ? -0.0035 : 0.0028);
+        var q = project(ringPos(tg.ring, ang));
+        var qd = (q.z / 1.42 + 1) / 2;
+        tg.el.style.transform = "translate(-50%, -50%) translate(" + q.x.toFixed(1) + "px," + q.y.toFixed(1) + "px) scale(" + (0.7 + qd * 0.35).toFixed(3) + ")";
+        tg.el.style.opacity = (0.25 + qd * 0.6).toFixed(2);
+      }
+    }
+    function renderStatic() { draw(16); positionChips(); positionTags(); }
     function curLang() { var l = document.documentElement.lang; return I18N[l] ? l : "en"; }
     function refreshPop() {
       if (!activeHub) return;
@@ -1648,22 +1724,42 @@
         ctx.lineWidth = 1;
         ctx.stroke();
         ctx.setLineDash([]);
-        // satellite on the ring
-        var sa = (frame * 0.004 + ring * 2.2) % (Math.PI * 2);
-        var sat = project({ x: Math.cos(sa) * (rr / R), y: Math.sin(sa) * Math.sin(tilt) * (rr / R), z: Math.sin(sa) * Math.cos(tilt) * (rr / R) });
-        ctx.beginPath();
-        ctx.arc(sat.x, sat.y, 2.4 * sat.s, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(colors.signal, 0.85);
-        ctx.fill();
       }
 
-      // dotted globe
+      // atmosphere rim
+      var atm = ctx.createRadialGradient(W / 2, H / 2, R * 0.86, W / 2, H / 2, R * 1.16);
+      atm.addColorStop(0, "rgba(0,0,0,0)");
+      atm.addColorStop(0.55, rgba(colors.accent, 0.14));
+      atm.addColorStop(0.8, rgba(colors.accent, 0.05));
+      atm.addColorStop(1, "rgba(0,0,0,0)");
+      ctx.fillStyle = atm;
+      ctx.beginPath();
+      ctx.arc(W / 2, H / 2, R * 1.16, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Earth: faint oceans, bright continents, orbital scan sweep, twinkling cities
+      var scanLat = Math.sin(frame * 0.008) * 65;
       for (var n = 0; n < dots.length; n++) {
-        var p = project(dots[n]);
+        var d3 = dots[n];
+        var p = project(d3);
         var depth01 = (p.z + 1) / 2;
+        var alpha, size;
+        if (d3.ocean) {
+          ctx.fillStyle = rgba(colors.faint, 0.03 + depth01 * 0.10);
+          size = 0.7 + depth01 * 0.6;
+        } else if (d3.tw) {
+          var twk = 0.5 + 0.5 * Math.sin(frame * 0.02 * d3.tw + d3.ph);
+          ctx.fillStyle = rgba(colors.signal, (0.25 + 0.6 * twk) * depth01);
+          size = 0.9 + depth01 * 1.15 + 0.5 * twk;
+        } else {
+          alpha = 0.12 + depth01 * 0.5;
+          var scanD = Math.abs(d3.lat - scanLat);
+          if (scanD < 6) alpha = Math.min(1, alpha + (1 - scanD / 6) * 0.5 * depth01);
+          ctx.fillStyle = rgba(colors.accent, alpha);
+          size = 0.9 + depth01 * 1.15;
+        }
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 0.8 + depth01 * 1.1, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(colors.accent, 0.10 + depth01 * 0.45);
+        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -1672,6 +1768,7 @@
         var arc = arcs[ai];
         arc.t += dt * 0.00042;
         if (arc.t >= 1.15) { arcs.splice(ai, 1); continue; }
+        if (!arc.pinged && arc.t >= 1) { arc.pinged = true; pings.push({ p: arc.b, t: 0, hot: arc.hot }); }
         var head = Math.min(arc.t, 1);
         var tail = Math.max(head - 0.34, 0);
         var col = arc.hot ? colors.signal : colors.accent;
@@ -1708,6 +1805,21 @@
         }
       }
 
+      // radar-style impact pings where arcs land
+      for (var gi = pings.length - 1; gi >= 0; gi--) {
+        var ping = pings[gi];
+        ping.t += dt * 0.0016;
+        if (ping.t >= 1) { pings.splice(gi, 1); continue; }
+        var pq = project(ping.p);
+        if (pq.z > -0.2) {
+          ctx.beginPath();
+          ctx.arc(pq.x, pq.y, (2 + ping.t * 14) * pq.s, 0, Math.PI * 2);
+          ctx.strokeStyle = rgba(ping.hot ? colors.signal : colors.accent, (1 - ping.t) * 0.5);
+          ctx.lineWidth = 1.2;
+          ctx.stroke();
+        }
+      }
+
       // hub anchor glows (DOM chips sit on top of these)
       for (var hi = 0; hi < hubs.length; hi++) {
         var hp = project(hubs[hi].v);
@@ -1737,6 +1849,7 @@
       if (frame % 240 === 0) refreshColors();
       draw(dt);
       positionChips();
+      positionTags();
       rafId = requestAnimationFrame(loop);
     }
     function start() {
