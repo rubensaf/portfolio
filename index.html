@@ -376,16 +376,50 @@
   .tag:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
 
   .hero-vis { position: relative; }
-  .hero-vis canvas {
+  .vis-stage { position: relative; max-width: 440px; margin: 0 auto; }
+  .vis-stage canvas {
     display: block;
     width: 100%;
     aspect-ratio: 1 / 1;
-    max-width: 440px;
-    margin: 0 auto;
     cursor: grab;
     touch-action: pan-y;
   }
-  .hero-vis canvas:active { cursor: grabbing; }
+  .vis-stage canvas:active { cursor: grabbing; }
+  .orbit-chips { position: absolute; inset: 0; pointer-events: none; }
+  .orbit-chip {
+    position: absolute;
+    left: 0;
+    top: 0;
+    pointer-events: auto;
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.04em;
+    padding: 5px 11px 5px 21px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: var(--surface);
+    color: var(--muted);
+    cursor: pointer;
+    white-space: nowrap;
+    user-select: none;
+    box-shadow: var(--card-shadow);
+    transition: border-color 0.15s ease, color 0.15s ease, background 0.15s ease;
+    will-change: transform, opacity;
+  }
+  .orbit-chip::before {
+    content: "";
+    position: absolute;
+    left: 9px;
+    top: 50%;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    transform: translateY(-50%);
+    background: var(--accent);
+  }
+  .orbit-chip:hover { border-color: var(--accent); color: var(--accent); }
+  .orbit-chip.active { background: var(--accent); border-color: var(--accent); color: var(--ground); }
+  .orbit-chip.active::before { background: var(--ground); }
   .vis-caption {
     text-align: center;
     font-family: var(--mono);
@@ -751,7 +785,8 @@
     .main { padding: 40px 24px 72px; }
     .hero-grid { grid-template-columns: 1fr; gap: 8px; }
     .hero-vis { order: -1; }
-    .hero-vis canvas { max-width: 320px; }
+    .vis-stage { max-width: 320px; }
+    .orbit-chip { font-size: 0.6rem; padding: 4px 9px 4px 18px; }
     .featured-body { grid-template-columns: 1fr; }
     .xp-head { grid-template-columns: 1fr auto; }
     .xp-when { grid-column: 1 / -1; padding-top: 0; }
@@ -842,14 +877,17 @@
           </div>
         </div>
         <div class="hero-vis">
-          <canvas id="net3d" aria-label="Interactive 3D map of the portfolio" role="img"></canvas>
-          <div class="vis-pop" role="dialog" aria-hidden="true">
-            <button class="vis-pop-x" type="button" aria-label="Close">×</button>
-            <h4></h4>
-            <p></p>
-            <a class="vis-pop-go" href="#about">Go to section ↓</a>
+          <div class="vis-stage">
+            <canvas id="net3d" aria-label="Interactive 3D map of the portfolio" role="img"></canvas>
+            <div class="orbit-chips"></div>
+            <div class="vis-pop" role="dialog" aria-hidden="true">
+              <button class="vis-pop-x" type="button" aria-label="Close">×</button>
+              <h4></h4>
+              <p></p>
+              <a class="vis-pop-go" href="#about">Go to section ↓</a>
+            </div>
           </div>
-          <div class="vis-caption" data-i18n="vis.caption">drag to rotate · click a node to navigate</div>
+          <div class="vis-caption" data-i18n="vis.caption">drag to rotate · click a label to explore</div>
         </div>
       </div>
     </section>
@@ -957,10 +995,10 @@
       <div class="eyebrow reveal" data-i18n="eyebrow.projects">04 · Personal projects</div>
       <div class="grid stagger">
         <div class="card">
-          <span class="yr" data-i18n="proj1.yr">2026 · TFG · AI-driven security tool</span>
+          <span class="yr" data-i18n="proj1.yr">2026 · Bachelor's Thesis · AI-driven security tool</span>
           <h3>CVE Intelligence Analyzer</h3>
-          <p data-i18n="proj1.p">My Final Degree Project (TFG): a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.</p>
-          <span class="stat" data-i18n="proj1.stat">TFG grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn</span>
+          <p data-i18n="proj1.p">My Bachelor's Thesis: a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.</p>
+          <span class="stat" data-i18n="proj1.stat">Thesis grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn</span>
         </div>
         <div class="card">
           <span class="yr" data-i18n="proj2.yr">2025 · cloud architecture</span>
@@ -1030,7 +1068,7 @@
         <div>
           <h3 data-i18n="edu1.h3">B.Sc. Software Engineering — Cybersecurity specialization</h3>
           <p data-i18n="edu1.p">U-TAD, University Center of Technology and Digital Art · Madrid</p>
-          <p class="edu-tfg" data-i18n="edu1.tfg">TFG: CVE Intelligence Analyzer — graded 9.65/10 (≈ 3.9/4.0 GPA)</p>
+          <p class="edu-tfg" data-i18n="edu1.tfg">Bachelor's Thesis: CVE Intelligence Analyzer — 9.65/10 (≈ 3.9/4.0 GPA)</p>
         </div>
       </div>
       <div class="edu-item reveal">
@@ -1078,14 +1116,14 @@
       "hero.p2": "Solid foundation in full-stack development and cloud infrastructure; driven to ship things that are secure by design and useful from day one.",
       "tag1": "cybersecurity & forensics",
       "tag3": "full-stack development",
-      "vis.caption": "drag to rotate · click a node to navigate",
+      "vis.caption": "drag to rotate · click a label to explore",
       "pop.go": "Go to section ↓",
       "pop.about": "Recently graduated Software Engineer — cybersecurity + AI. Start here.",
       "pop.xp": "PwC cybersecurity consulting, applied AI in industry and live-event networking.",
       "pop.featured": "Commercial intelligence platform on the Holded API — my latest shipped product.",
-      "pop.projects": "CVE Intelligence Analyzer (TFG · 9.65/10), AWS microservices, full-stack and game dev.",
+      "pop.projects": "CVE Intelligence Analyzer (Bachelor's Thesis · 9.65/10), AWS microservices, full-stack and game dev.",
       "pop.skills": "Security, Python · Java · C/C++, ML & LLMs, AWS & Docker, SQL & NoSQL.",
-      "pop.edu": "B.Sc. Software Engineering at U-TAD · TFG graded 9.65/10 (≈ 3.9/4.0 GPA).",
+      "pop.edu": "B.Sc. Software Engineering at U-TAD · Bachelor's Thesis: 9.65/10 (≈ 3.9/4.0 GPA).",
       "eyebrow.xp": "02 · Experience",
       "eyebrow.featured": "03 · Featured work",
       "eyebrow.projects": "04 · Personal projects",
@@ -1114,9 +1152,9 @@
       "mock.r2": "repeat client",
       "mock.r3": "recover",
       "mock.note": "Illustrative preview — all figures and client names are fictional.",
-      "proj1.yr": "2026 · TFG · AI-driven security tool",
-      "proj1.p": "My Final Degree Project (TFG): a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.",
-      "proj1.stat": "TFG grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn",
+      "proj1.yr": "2026 · Bachelor's Thesis · AI-driven security tool",
+      "proj1.p": "My Bachelor's Thesis: a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.",
+      "proj1.stat": "Thesis grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn",
       "proj2.yr": "2025 · cloud architecture",
       "proj2.h3": "Cloud-Native Modular App",
       "proj2.p": "Microservices-based application designed and deployed on AWS, with containerized services and REST APIs communicating across the stack.",
@@ -1143,7 +1181,7 @@
       "sk4.i5": "Proactive team player",
       "edu1.h3": "B.Sc. Software Engineering — Cybersecurity specialization",
       "edu1.p": "U-TAD, University Center of Technology and Digital Art · Madrid",
-      "edu1.tfg": "TFG: CVE Intelligence Analyzer — graded 9.65/10 (≈ 3.9/4.0 GPA)",
+      "edu1.tfg": "Bachelor's Thesis: CVE Intelligence Analyzer — 9.65/10 (≈ 3.9/4.0 GPA)",
       "edu2.h3": "International Baccalaureate (IB) Diploma"
     },
     es: {
@@ -1167,7 +1205,7 @@
       "hero.p2": "Base sólida en desarrollo full-stack e infraestructura cloud; me mueve construir cosas seguras por diseño y útiles desde el primer día.",
       "tag1": "ciberseguridad y forense",
       "tag3": "desarrollo full-stack",
-      "vis.caption": "arrastra para rotar · haz clic en un nodo para navegar",
+      "vis.caption": "arrastra para rotar · toca una etiqueta para explorar",
       "pop.go": "Ir a la sección ↓",
       "pop.about": "Ingeniero de Software recién graduado — ciberseguridad + IA. Empieza aquí.",
       "pop.xp": "Consultoría de ciberseguridad en PwC, IA aplicada en la industria y redes para eventos.",
@@ -1353,6 +1391,34 @@
     };
     var pop = document.querySelector(".vis-pop");
     var activeHub = null;
+    var chipsWrap = document.querySelector(".orbit-chips");
+    hubs.forEach(function (hub) {
+      var b = document.createElement("button");
+      b.type = "button";
+      b.className = "orbit-chip";
+      b.addEventListener("click", function () {
+        openPop(hub);
+        rotTarget = targetFor(hub);
+        if (reduced) { rotY = rotTarget.y; rotX = rotTarget.x; rotTarget = null; renderStatic(); }
+      });
+      hub.el = b;
+      chipsWrap.appendChild(b);
+    });
+    function setChipLabels() {
+      var L = hubLabels[curLang()];
+      hubs.forEach(function (hb) { hb.el.textContent = L[hb.section]; });
+    }
+    function positionChips() {
+      for (var ci = 0; ci < hubs.length; ci++) {
+        var ch = hubs[ci], cp = project(ch.v);
+        var cd = (cp.z + 1) / 2;
+        ch.el.style.transform = "translate(-50%, -50%) translate(" + cp.x.toFixed(1) + "px," + cp.y.toFixed(1) + "px) scale(" + (0.72 + cd * 0.32).toFixed(3) + ")";
+        ch.el.style.opacity = (0.55 + cd * 0.45).toFixed(2);
+        ch.el.style.zIndex = String(1 + Math.round(cd * 3));
+        ch.el.classList.toggle("active", activeHub === ch);
+      }
+    }
+    function renderStatic() { draw(16); positionChips(); }
     function curLang() { return document.documentElement.lang === "es" ? "es" : "en"; }
     function refreshPop() {
       if (!activeHub) return;
@@ -1384,18 +1450,11 @@
       var tx = Math.atan2(v.y, Math.sqrt(v.x * v.x + v.z * v.z));
       return { y: ty, x: Math.max(-1.2, Math.min(1.2, tx)) };
     }
-    function hubAt(cx, cy) {
-      var rect = canvas.getBoundingClientRect();
-      var mx = cx - rect.left, my = cy - rect.top;
-      for (var hh = 0; hh < hubs.length; hh++) {
-        var hpj = project(hubs[hh].v);
-        if (Math.hypot(hpj.x - mx, hpj.y - my) < 16) return hubs[hh];
-      }
-      return null;
-    }
+    setChipLabels();
     langHooks.push(function () {
+      setChipLabels();
       if (activeHub) refreshPop();
-      if (reduced) draw(16);
+      if (reduced) renderStatic();
     });
 
     // travelling pulses along edges
@@ -1413,28 +1472,17 @@
       canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener("pointermove", function (e) {
-      if (!dragging) {
-        canvas.style.cursor = hubAt(e.clientX, e.clientY) ? "pointer" : "grab";
-        return;
-      }
+      if (!dragging) return;
       if (Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY) > 6) { movedDrag = true; rotTarget = null; }
       rotY += (e.clientX - lastX) * 0.006;
       rotX += (e.clientY - lastY) * 0.004;
       rotX = Math.max(-1.2, Math.min(1.2, rotX));
       lastX = e.clientX; lastY = e.clientY;
-      if (reduced && movedDrag) draw(16);
+      if (reduced && movedDrag) renderStatic();
     });
-    canvas.addEventListener("pointerup", function (e) {
+    canvas.addEventListener("pointerup", function () {
       dragging = false;
-      if (movedDrag) return;
-      var hub = hubAt(e.clientX, e.clientY);
-      if (hub) {
-        openPop(hub);
-        rotTarget = targetFor(hub);
-        if (reduced) { rotY = rotTarget.y; rotX = rotTarget.x; rotTarget = null; draw(16); }
-      } else {
-        closePop();
-      }
+      if (!movedDrag) closePop();
     });
     ["pointercancel", "pointerleave"].forEach(function (ev) {
       canvas.addEventListener(ev, function () { dragging = false; });
@@ -1509,7 +1557,7 @@
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
         ctx.strokeStyle = rgba(colors.accent, alpha);
-        ctx.lineWidth = 1;
+        ctx.lineWidth = 0.6 + (depth + 1) * 0.45;
         ctx.stroke();
       }
 
@@ -1543,27 +1591,15 @@
         ctx.fill();
       }
 
-      // section hubs (clickable)
-      var lang = curLang();
-      ctx.font = "600 10px ui-monospace, Consolas, monospace";
+      // hub anchor glows (DOM chips sit on top of these)
       for (var hi = 0; hi < hubs.length; hi++) {
-        var hb = hubs[hi];
-        var hp = project(hb.v);
+        var hp = project(hubs[hi].v);
         var hd = (hp.z + 1) / 2;
-        var isAct = activeHub === hb;
-        var hsz = (isAct ? 6.5 : 5) * (0.6 + hd * 0.55);
+        var isAct = activeHub === hubs[hi];
         ctx.beginPath();
-        ctx.arc(hp.x, hp.y, hsz + 3.5, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(colors.accent, isAct ? 0.3 : 0.08 + hd * 0.1);
+        ctx.arc(hp.x, hp.y, (isAct ? 9 : 6) * (0.6 + hd * 0.5), 0, Math.PI * 2);
+        ctx.fillStyle = rgba(isAct ? colors.signal : colors.accent, 0.14 + hd * 0.18);
         ctx.fill();
-        ctx.beginPath();
-        ctx.arc(hp.x, hp.y, hsz, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(isAct ? colors.signal : colors.accent, 0.5 + 0.5 * hd);
-        ctx.fill();
-        if (hp.z > -0.15) {
-          ctx.fillStyle = rgba(colors.ink, 0.4 + 0.55 * hd);
-          ctx.fillText(hubLabels[lang][hb.section], hp.x + hsz + 6, hp.y + 3.5);
-        }
       }
     }
 
@@ -1583,6 +1619,7 @@
       if (frame % 70 === 0) spawnPulse();
       if (frame % 240 === 0) refreshColors();
       draw(dt);
+      positionChips();
       rafId = requestAnimationFrame(loop);
     }
     function start() {
@@ -1596,9 +1633,10 @@
     }
 
     resize();
-    window.addEventListener("resize", function () { resize(); if (reduced) draw(16); });
+    renderStatic();
+    window.addEventListener("resize", function () { resize(); renderStatic(); });
     if (reduced) {
-      draw(16); // single static frame
+      // static frame already rendered
     } else {
       var visIo = new IntersectionObserver(function (entries) {
         entries.forEach(function (e) { e.isIntersecting ? start() : stop(); });
