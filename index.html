@@ -396,6 +396,49 @@
     margin-top: 2px;
   }
 
+  .vis-pop {
+    position: absolute;
+    left: 50%;
+    bottom: 7%;
+    transform: translateX(-50%) translateY(8px);
+    width: min(92%, 310px);
+    background: var(--surface);
+    border: 1px solid var(--line-strong);
+    border-radius: 12px;
+    box-shadow: var(--card-shadow);
+    padding: 14px 34px 12px 16px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+    z-index: 5;
+  }
+  .vis-pop.show { opacity: 1; pointer-events: auto; transform: translateX(-50%); }
+  .vis-pop h4 {
+    margin: 0 0 6px;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+  }
+  .vis-pop p { margin: 0 0 10px; font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .vis-pop-go { font-family: var(--mono); font-size: 0.75rem; }
+  .vis-pop-x {
+    position: absolute;
+    top: 6px;
+    right: 8px;
+    background: none;
+    border: none;
+    color: var(--faint);
+    font-size: 1.05rem;
+    line-height: 1;
+    padding: 4px;
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+  .vis-pop-x:hover { color: var(--ink); }
+
   /* experience: collapsible items */
   .xp { display: flex; flex-direction: column; }
   .xp-item { border-bottom: 1px solid var(--line); }
@@ -627,6 +670,7 @@
   .edu-item .when { font-family: var(--mono); font-size: 0.75rem; color: var(--faint); padding-top: 4px; }
   .edu-item h3 { margin: 0 0 2px; font-size: 1rem; }
   .edu-item p { margin: 0; color: var(--muted); font-size: 0.9rem; }
+  .edu-item .edu-tfg { font-family: var(--mono); font-size: 0.74rem; color: var(--signal); margin-top: 4px; }
 
   /* footer */
   .foot {
@@ -788,7 +832,7 @@
         <div>
           <div class="term-line"><span class="prompt">ruben@madrid</span>:~$ <span id="typed">whoami</span><span class="cursor" aria-hidden="true"></span></div>
           <h2 data-i18n="hero.h2" data-i18n-html>I build <em>secure, intelligent</em> software — from threat models to shipped products.</h2>
-          <p data-i18n="hero.p1" data-i18n-html>Final-year Software Engineering student at U-TAD specializing in <strong>cybersecurity</strong>, with hands-on experience in vulnerability assessment at PwC and applied machine learning in industry. I like working where security, data and product meet: automating workflows with ML and LLMs, and turning raw APIs into tools people actually use every day.</p>
+          <p data-i18n="hero.p1" data-i18n-html>Software Engineer, recently graduated from U-TAD with a specialization in <strong>cybersecurity</strong> and hands-on experience in vulnerability assessment at PwC and applied machine learning in industry. I like working where security, data and product meet: automating workflows with ML and LLMs, and turning raw APIs into tools people actually use every day.</p>
           <p data-i18n="hero.p2">Solid foundation in full-stack development and cloud infrastructure; driven to ship things that are secure by design and useful from day one.</p>
           <div class="hero-tags">
             <span class="tag" data-i18n="tag1">cybersecurity &amp; forensics</span>
@@ -798,8 +842,14 @@
           </div>
         </div>
         <div class="hero-vis">
-          <canvas id="net3d" aria-label="Animated 3D network of security nodes" role="img"></canvas>
-          <div class="vis-caption" data-i18n="vis.caption">drag to explore · security ecosystem</div>
+          <canvas id="net3d" aria-label="Interactive 3D map of the portfolio" role="img"></canvas>
+          <div class="vis-pop" role="dialog" aria-hidden="true">
+            <button class="vis-pop-x" type="button" aria-label="Close">×</button>
+            <h4></h4>
+            <p></p>
+            <a class="vis-pop-go" href="#about">Go to section ↓</a>
+          </div>
+          <div class="vis-caption" data-i18n="vis.caption">drag to rotate · click a node to navigate</div>
         </div>
       </div>
     </section>
@@ -907,10 +957,10 @@
       <div class="eyebrow reveal" data-i18n="eyebrow.projects">04 · Personal projects</div>
       <div class="grid stagger">
         <div class="card">
-          <span class="yr" data-i18n="proj1.yr">2026 · AI-driven security tool</span>
+          <span class="yr" data-i18n="proj1.yr">2026 · TFG · AI-driven security tool</span>
           <h3>CVE Intelligence Analyzer</h3>
-          <p data-i18n="proj1.p">Vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.</p>
-          <span class="stat" data-i18n="proj1.stat">82% prediction accuracy · Python · Scikit-learn · SQLAlchemy</span>
+          <p data-i18n="proj1.p">My Final Degree Project (TFG): a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.</p>
+          <span class="stat" data-i18n="proj1.stat">TFG grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn</span>
         </div>
         <div class="card">
           <span class="yr" data-i18n="proj2.yr">2025 · cloud architecture</span>
@@ -980,6 +1030,7 @@
         <div>
           <h3 data-i18n="edu1.h3">B.Sc. Software Engineering — Cybersecurity specialization</h3>
           <p data-i18n="edu1.p">U-TAD, University Center of Technology and Digital Art · Madrid</p>
+          <p class="edu-tfg" data-i18n="edu1.tfg">TFG: CVE Intelligence Analyzer — graded 9.65/10 (≈ 3.9/4.0 GPA)</p>
         </div>
       </div>
       <div class="edu-item reveal">
@@ -1023,11 +1074,18 @@
       "langs.native": "native",
       "theme.note": "// adapts to your light / dark theme",
       "hero.h2": "I build <em>secure, intelligent</em> software — from threat models to shipped products.",
-      "hero.p1": "Final-year Software Engineering student at U-TAD specializing in <strong>cybersecurity</strong>, with hands-on experience in vulnerability assessment at PwC and applied machine learning in industry. I like working where security, data and product meet: automating workflows with ML and LLMs, and turning raw APIs into tools people actually use every day.",
+      "hero.p1": "Software Engineer, recently graduated from U-TAD with a specialization in <strong>cybersecurity</strong> and hands-on experience in vulnerability assessment at PwC and applied machine learning in industry. I like working where security, data and product meet: automating workflows with ML and LLMs, and turning raw APIs into tools people actually use every day.",
       "hero.p2": "Solid foundation in full-stack development and cloud infrastructure; driven to ship things that are secure by design and useful from day one.",
       "tag1": "cybersecurity & forensics",
       "tag3": "full-stack development",
-      "vis.caption": "drag to explore · security ecosystem",
+      "vis.caption": "drag to rotate · click a node to navigate",
+      "pop.go": "Go to section ↓",
+      "pop.about": "Recently graduated Software Engineer — cybersecurity + AI. Start here.",
+      "pop.xp": "PwC cybersecurity consulting, applied AI in industry and live-event networking.",
+      "pop.featured": "Commercial intelligence platform on the Holded API — my latest shipped product.",
+      "pop.projects": "CVE Intelligence Analyzer (TFG · 9.65/10), AWS microservices, full-stack and game dev.",
+      "pop.skills": "Security, Python · Java · C/C++, ML & LLMs, AWS & Docker, SQL & NoSQL.",
+      "pop.edu": "B.Sc. Software Engineering at U-TAD · TFG graded 9.65/10 (≈ 3.9/4.0 GPA).",
       "eyebrow.xp": "02 · Experience",
       "eyebrow.featured": "03 · Featured work",
       "eyebrow.projects": "04 · Personal projects",
@@ -1056,9 +1114,9 @@
       "mock.r2": "repeat client",
       "mock.r3": "recover",
       "mock.note": "Illustrative preview — all figures and client names are fictional.",
-      "proj1.yr": "2026 · AI-driven security tool",
-      "proj1.p": "Vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.",
-      "proj1.stat": "82% prediction accuracy · Python · Scikit-learn · SQLAlchemy",
+      "proj1.yr": "2026 · TFG · AI-driven security tool",
+      "proj1.p": "My Final Degree Project (TFG): a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.",
+      "proj1.stat": "TFG grade 9.65/10 (≈ 3.9/4.0 GPA) · 82% accuracy · Python · Scikit-learn",
       "proj2.yr": "2025 · cloud architecture",
       "proj2.h3": "Cloud-Native Modular App",
       "proj2.p": "Microservices-based application designed and deployed on AWS, with containerized services and REST APIs communicating across the stack.",
@@ -1085,6 +1143,7 @@
       "sk4.i5": "Proactive team player",
       "edu1.h3": "B.Sc. Software Engineering — Cybersecurity specialization",
       "edu1.p": "U-TAD, University Center of Technology and Digital Art · Madrid",
+      "edu1.tfg": "TFG: CVE Intelligence Analyzer — graded 9.65/10 (≈ 3.9/4.0 GPA)",
       "edu2.h3": "International Baccalaureate (IB) Diploma"
     },
     es: {
@@ -1104,11 +1163,18 @@
       "langs.native": "nativo",
       "theme.note": "// se adapta a tu tema claro / oscuro",
       "hero.h2": "Construyo software <em>seguro e inteligente</em> — del modelo de amenazas al producto final.",
-      "hero.p1": "Estudiante de último año de Ingeniería de Software en U-TAD, especializado en <strong>ciberseguridad</strong>, con experiencia práctica en evaluación de vulnerabilidades en PwC y machine learning aplicado en la industria. Me gusta trabajar donde se cruzan seguridad, datos y producto: automatizando flujos con ML y LLMs, y convirtiendo APIs en herramientas que la gente usa a diario.",
+      "hero.p1": "Ingeniero de Software recién graduado por U-TAD, especializado en <strong>ciberseguridad</strong>, con experiencia práctica en evaluación de vulnerabilidades en PwC y machine learning aplicado en la industria. Me gusta trabajar donde se cruzan seguridad, datos y producto: automatizando flujos con ML y LLMs, y convirtiendo APIs en herramientas que la gente usa a diario.",
       "hero.p2": "Base sólida en desarrollo full-stack e infraestructura cloud; me mueve construir cosas seguras por diseño y útiles desde el primer día.",
       "tag1": "ciberseguridad y forense",
       "tag3": "desarrollo full-stack",
-      "vis.caption": "arrastra para explorar · ecosistema de seguridad",
+      "vis.caption": "arrastra para rotar · haz clic en un nodo para navegar",
+      "pop.go": "Ir a la sección ↓",
+      "pop.about": "Ingeniero de Software recién graduado — ciberseguridad + IA. Empieza aquí.",
+      "pop.xp": "Consultoría de ciberseguridad en PwC, IA aplicada en la industria y redes para eventos.",
+      "pop.featured": "Plataforma de inteligencia comercial sobre la API de Holded — mi último producto.",
+      "pop.projects": "CVE Intelligence Analyzer (TFG · 9,65/10), microservicios en AWS, full-stack y videojuegos.",
+      "pop.skills": "Seguridad, Python · Java · C/C++, ML y LLMs, AWS y Docker, SQL y NoSQL.",
+      "pop.edu": "Grado en Ingeniería de Software en U-TAD · TFG con nota 9,65/10 (≈ 3,9/4,0 GPA).",
       "eyebrow.xp": "02 · Experiencia",
       "eyebrow.featured": "03 · Proyecto destacado",
       "eyebrow.projects": "04 · Proyectos personales",
@@ -1137,9 +1203,9 @@
       "mock.r2": "cliente repetidor",
       "mock.r3": "recuperar",
       "mock.note": "Vista ilustrativa — todas las cifras y nombres de clientes son ficticios.",
-      "proj1.yr": "2026 · herramienta de seguridad con IA",
-      "proj1.p": "Sistema de análisis de vulnerabilidades con machine learning (Random Forest) y NLP para predecir la probabilidad de explotación de CVEs. Pipeline de datos automatizado desde NVD, Exploit-DB y GitHub, con un modelo de scoring propio que supera al CVSS estándar para priorización en Blue Teams.",
-      "proj1.stat": "82% de precisión · Python · Scikit-learn · SQLAlchemy",
+      "proj1.yr": "2026 · TFG · herramienta de seguridad con IA",
+      "proj1.p": "Mi Trabajo de Fin de Grado (TFG): un sistema de análisis de vulnerabilidades con machine learning (Random Forest) y NLP para predecir la probabilidad de explotación de CVEs. Pipeline de datos automatizado desde NVD, Exploit-DB y GitHub, con un modelo de scoring propio que supera al CVSS estándar para priorización en Blue Teams.",
+      "proj1.stat": "TFG: 9,65/10 (≈ 3,9/4,0 GPA) · 82% de precisión · Python · Scikit-learn",
       "proj2.yr": "2025 · arquitectura cloud",
       "proj2.h3": "App Modular Cloud-Native",
       "proj2.p": "Aplicación basada en microservicios diseñada y desplegada en AWS, con servicios en contenedores y APIs REST comunicándose entre sí.",
@@ -1166,10 +1232,12 @@
       "sk4.i5": "Proactivo, espíritu de equipo",
       "edu1.h3": "Grado en Ingeniería de Software — especialización en Ciberseguridad",
       "edu1.p": "U-TAD, Centro Universitario de Tecnología y Arte Digital · Madrid",
+      "edu1.tfg": "TFG: CVE Intelligence Analyzer — nota 9,65/10 (≈ 3,9/4,0 GPA)",
       "edu2.h3": "Bachillerato Internacional (IB)"
     }
   };
 
+  var langHooks = [];
   function setLang(lang) {
     if (!I18N[lang]) lang = "en";
     var dict = I18N[lang];
@@ -1184,6 +1252,7 @@
     document.querySelectorAll(".lang-switch button").forEach(function (b) {
       b.setAttribute("aria-pressed", String(b.getAttribute("data-lang") === lang));
     });
+    langHooks.forEach(function (f) { f(lang); });
   }
   document.querySelectorAll(".lang-switch button").forEach(function (b) {
     b.addEventListener("click", function () { setLang(b.getAttribute("data-lang")); });
@@ -1230,13 +1299,14 @@
       var n = parseInt(hex, 16);
       return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
     }
-    var colors = { accent: [86, 188, 205], signal: [224, 164, 74], faint: [100, 113, 127] };
+    var colors = { accent: [86, 188, 205], signal: [224, 164, 74], faint: [100, 113, 127], ink: [230, 236, 242] };
     function refreshColors() {
       var cs = getComputedStyle(document.documentElement);
       try {
         colors.accent = hexToRgb(cs.getPropertyValue("--accent"));
         colors.signal = hexToRgb(cs.getPropertyValue("--signal"));
         colors.faint = hexToRgb(cs.getPropertyValue("--faint"));
+        colors.ink = hexToRgb(cs.getPropertyValue("--ink"));
       } catch (e) {}
     }
     refreshColors();
@@ -1264,6 +1334,70 @@
         if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 0.42) edges.push([a, b]);
       }
     }
+    // interactive section hubs
+    function norm(x, y, z) {
+      var m = Math.sqrt(x * x + y * y + z * z);
+      return { x: x / m, y: y / m, z: z / m };
+    }
+    var hubs = [
+      { v: norm(0, 0.15, 1), section: "about", titleKey: "nav.about", popKey: "pop.about" },
+      { v: norm(0.95, 0.3, 0.1), section: "experience", titleKey: "nav.xp", popKey: "pop.xp" },
+      { v: norm(-0.9, 0.35, 0.25), section: "featured", titleKey: "nav.featured", popKey: "pop.featured" },
+      { v: norm(0.15, -0.95, 0.3), section: "projects", titleKey: "nav.projects", popKey: "pop.projects" },
+      { v: norm(-0.4, -0.5, -0.75), section: "skills", titleKey: "nav.skills", popKey: "pop.skills" },
+      { v: norm(0.3, 0.9, -0.3), section: "education", titleKey: "nav.edu", popKey: "pop.edu" }
+    ];
+    var hubLabels = {
+      en: { about: "about", experience: "experience", featured: "featured", projects: "projects", skills: "skills", education: "education" },
+      es: { about: "sobre m\u00ed", experience: "experiencia", featured: "destacado", projects: "proyectos", skills: "habilidades", education: "formaci\u00f3n" }
+    };
+    var pop = document.querySelector(".vis-pop");
+    var activeHub = null;
+    function curLang() { return document.documentElement.lang === "es" ? "es" : "en"; }
+    function refreshPop() {
+      if (!activeHub) return;
+      var d = I18N[curLang()];
+      pop.querySelector("h4").textContent = d[activeHub.titleKey];
+      pop.querySelector("p").textContent = d[activeHub.popKey];
+      var go = pop.querySelector(".vis-pop-go");
+      go.textContent = d["pop.go"];
+      go.setAttribute("href", "#" + activeHub.section);
+    }
+    function openPop(hub) {
+      activeHub = hub;
+      refreshPop();
+      pop.classList.add("show");
+      pop.setAttribute("aria-hidden", "false");
+    }
+    function closePop() {
+      activeHub = null;
+      pop.classList.remove("show");
+      pop.setAttribute("aria-hidden", "true");
+    }
+    pop.querySelector(".vis-pop-x").addEventListener("click", closePop);
+    pop.querySelector(".vis-pop-go").addEventListener("click", function () { closePop(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape") closePop(); });
+    function targetFor(hub) {
+      var v = hub.v;
+      var ty = -Math.atan2(v.x, v.z);
+      ty += Math.round((rotY - ty) / (Math.PI * 2)) * Math.PI * 2;
+      var tx = Math.atan2(v.y, Math.sqrt(v.x * v.x + v.z * v.z));
+      return { y: ty, x: Math.max(-1.2, Math.min(1.2, tx)) };
+    }
+    function hubAt(cx, cy) {
+      var rect = canvas.getBoundingClientRect();
+      var mx = cx - rect.left, my = cy - rect.top;
+      for (var hh = 0; hh < hubs.length; hh++) {
+        var hpj = project(hubs[hh].v);
+        if (Math.hypot(hpj.x - mx, hpj.y - my) < 16) return hubs[hh];
+      }
+      return null;
+    }
+    langHooks.push(function () {
+      if (activeHub) refreshPop();
+      if (reduced) draw(16);
+    });
+
     // travelling pulses along edges
     var pulses = [];
     function spawnPulse() {
@@ -1272,18 +1406,37 @@
     }
 
     var rotY = 0.6, rotX = 0.35, velY = 0.0028, dragging = false, lastX = 0, lastY = 0;
+    var rotTarget = null, downX = 0, downY = 0, movedDrag = false;
     canvas.addEventListener("pointerdown", function (e) {
-      dragging = true; lastX = e.clientX; lastY = e.clientY;
+      dragging = true; movedDrag = false;
+      lastX = downX = e.clientX; lastY = downY = e.clientY;
       canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener("pointermove", function (e) {
-      if (!dragging) return;
+      if (!dragging) {
+        canvas.style.cursor = hubAt(e.clientX, e.clientY) ? "pointer" : "grab";
+        return;
+      }
+      if (Math.abs(e.clientX - downX) + Math.abs(e.clientY - downY) > 6) { movedDrag = true; rotTarget = null; }
       rotY += (e.clientX - lastX) * 0.006;
       rotX += (e.clientY - lastY) * 0.004;
       rotX = Math.max(-1.2, Math.min(1.2, rotX));
       lastX = e.clientX; lastY = e.clientY;
+      if (reduced && movedDrag) draw(16);
     });
-    ["pointerup", "pointercancel", "pointerleave"].forEach(function (ev) {
+    canvas.addEventListener("pointerup", function (e) {
+      dragging = false;
+      if (movedDrag) return;
+      var hub = hubAt(e.clientX, e.clientY);
+      if (hub) {
+        openPop(hub);
+        rotTarget = targetFor(hub);
+        if (reduced) { rotY = rotTarget.y; rotX = rotTarget.x; rotTarget = null; draw(16); }
+      } else {
+        closePop();
+      }
+    });
+    ["pointercancel", "pointerleave"].forEach(function (ev) {
       canvas.addEventListener(ev, function () { dragging = false; });
     });
 
@@ -1389,6 +1542,29 @@
         }
         ctx.fill();
       }
+
+      // section hubs (clickable)
+      var lang = curLang();
+      ctx.font = "600 10px ui-monospace, Consolas, monospace";
+      for (var hi = 0; hi < hubs.length; hi++) {
+        var hb = hubs[hi];
+        var hp = project(hb.v);
+        var hd = (hp.z + 1) / 2;
+        var isAct = activeHub === hb;
+        var hsz = (isAct ? 6.5 : 5) * (0.6 + hd * 0.55);
+        ctx.beginPath();
+        ctx.arc(hp.x, hp.y, hsz + 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(colors.accent, isAct ? 0.3 : 0.08 + hd * 0.1);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(hp.x, hp.y, hsz, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(isAct ? colors.signal : colors.accent, 0.5 + 0.5 * hd);
+        ctx.fill();
+        if (hp.z > -0.15) {
+          ctx.fillStyle = rgba(colors.ink, 0.4 + 0.55 * hd);
+          ctx.fillText(hubLabels[lang][hb.section], hp.x + hsz + 6, hp.y + 3.5);
+        }
+      }
     }
 
     var running = false, rafId = 0, lastT = 0;
@@ -1397,7 +1573,13 @@
       var dt = lastT ? Math.min(t - lastT, 50) : 16;
       lastT = t;
       frame++;
-      if (!dragging) rotY += velY * (dt / 16);
+      if (rotTarget && !dragging) {
+        rotY += (rotTarget.y - rotY) * 0.07 * (dt / 16);
+        rotX += (rotTarget.x - rotX) * 0.07 * (dt / 16);
+        if (Math.abs(rotTarget.y - rotY) < 0.01 && Math.abs(rotTarget.x - rotX) < 0.01) rotTarget = null;
+      } else if (!dragging && !activeHub) {
+        rotY += velY * (dt / 16);
+      }
       if (frame % 70 === 0) spawnPulse();
       if (frame % 240 === 0) refreshColors();
       draw(dt);
