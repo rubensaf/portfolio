@@ -804,14 +804,14 @@
   <nav class="topbar-nav" aria-label="Sections">
     <a href="#about" data-i18n="nav.about">about</a>
     <a href="#experience" data-i18n="nav.xp">experience</a>
-    <a href="#featured" data-i18n="nav.featured">featured</a>
+    <a href="#featured" data-i18n="nav.featured">latest project</a>
     <a href="#projects" data-i18n="nav.projects">projects</a>
     <a href="#skills" data-i18n="nav.skills">skills</a>
     <a href="#education" data-i18n="nav.edu">education</a>
   </nav>
   <div class="lang-switch" role="group" aria-label="Language">
     <button type="button" data-lang="en" aria-pressed="true">EN</button>
-    <button type="button" data-lang="es" aria-pressed="false">ES</button>
+    <button type="button" data-lang="es" aria-pressed="false">ES</button><button type="button" data-lang="de" aria-pressed="false">DE</button>
   </div>
 </header>
 
@@ -821,7 +821,7 @@
       <div class="lang-switch-row">
         <div class="lang-switch" role="group" aria-label="Language">
           <button type="button" data-lang="en" aria-pressed="true">EN</button>
-          <button type="button" data-lang="es" aria-pressed="false">ES</button>
+          <button type="button" data-lang="es" aria-pressed="false">ES</button><button type="button" data-lang="de" aria-pressed="false">DE</button>
         </div>
       </div>
 
@@ -841,7 +841,7 @@
       <nav class="rail-nav" aria-label="Sections">
         <a href="#about"><span class="idx">01</span><span data-i18n="nav.about">about</span></a>
         <a href="#experience"><span class="idx">02</span><span data-i18n="nav.xp">experience</span></a>
-        <a href="#featured"><span class="idx">03</span><span data-i18n="nav.featured">featured work</span></a>
+        <a href="#featured"><span class="idx">03</span><span data-i18n="nav.featured">latest project</span></a>
         <a href="#projects"><span class="idx">04</span><span data-i18n="nav.projects">projects</span></a>
         <a href="#skills"><span class="idx">05</span><span data-i18n="nav.skills">skills</span></a>
         <a href="#education"><span class="idx">06</span><span data-i18n="nav.edu">education</span></a>
@@ -938,7 +938,7 @@
     </section>
 
     <section id="featured">
-      <div class="eyebrow reveal" data-i18n="eyebrow.featured">03 · Featured work</div>
+      <div class="eyebrow reveal" data-i18n="eyebrow.featured">03 · Latest project</div>
       <div class="featured reveal">
         <div class="featured-head">
           <span class="dot" aria-hidden="true"></span>
@@ -981,9 +981,9 @@
               </svg>
             </div>
             <div class="mock-rows">
-              <div class="mock-row"><b>Eventos Norte SL</b><span class="pill hot" data-i18n="mock.r1">call today</span></div>
-              <div class="mock-row"><b>Festival Ribeira</b><span class="pill cool" data-i18n="mock.r2">repeat client</span></div>
-              <div class="mock-row"><b>Sala Ámbar</b><span class="pill hot" data-i18n="mock.r3">recover</span></div>
+              <div class="mock-row"><b data-i18n="mock.c1">Organizer A</b><span class="pill hot" data-i18n="mock.r1">call today</span></div>
+              <div class="mock-row"><b data-i18n="mock.c2">Organizer B</b><span class="pill cool" data-i18n="mock.r2">repeat client</span></div>
+              <div class="mock-row"><b data-i18n="mock.c3">Organizer C</b><span class="pill hot" data-i18n="mock.r3">recover</span></div>
             </div>
             <div class="mock-note" data-i18n="mock.note">Illustrative preview — all figures and client names are fictional.</div>
           </div>
@@ -1101,7 +1101,7 @@
       "meta.edu": "U-TAD · Class of 2026",
       "nav.about": "about",
       "nav.xp": "experience",
-      "nav.featured": "featured work",
+      "nav.featured": "latest project",
       "nav.projects": "projects",
       "nav.skills": "skills",
       "nav.edu": "education",
@@ -1125,7 +1125,7 @@
       "pop.skills": "Security, Python · Java · C/C++, ML & LLMs, AWS & Docker, SQL & NoSQL.",
       "pop.edu": "B.Sc. Software Engineering at U-TAD · Bachelor's Thesis: 9.65/10 (≈ 3.9/4.0 GPA).",
       "eyebrow.xp": "02 · Experience",
-      "eyebrow.featured": "03 · Featured work",
+      "eyebrow.featured": "03 · Latest project",
       "eyebrow.projects": "04 · Personal projects",
       "eyebrow.skills": "05 · Skills",
       "eyebrow.edu": "06 · Education",
@@ -1151,6 +1151,9 @@
       "mock.r1": "call today",
       "mock.r2": "repeat client",
       "mock.r3": "recover",
+      "mock.c1": "Organizer A",
+      "mock.c2": "Organizer B",
+      "mock.c3": "Organizer C",
       "mock.note": "Illustrative preview — all figures and client names are fictional.",
       "proj1.yr": "2026 · Bachelor's Thesis · AI-driven security tool",
       "proj1.p": "My Bachelor's Thesis: a vulnerability analysis system using machine learning (Random Forest) and NLP to predict CVE exploitation probability. Automated data pipeline from NVD, Exploit-DB and GitHub, with a custom scoring model that outperforms standard CVSS for Blue Team prioritization.",
@@ -1190,7 +1193,7 @@
       "meta.edu": "U-TAD · Promoción 2026",
       "nav.about": "sobre mí",
       "nav.xp": "experiencia",
-      "nav.featured": "proyecto destacado",
+      "nav.featured": "último proyecto",
       "nav.projects": "proyectos",
       "nav.skills": "habilidades",
       "nav.edu": "formación",
@@ -1214,7 +1217,7 @@
       "pop.skills": "Seguridad, Python · Java · C/C++, ML y LLMs, AWS y Docker, SQL y NoSQL.",
       "pop.edu": "Grado en Ingeniería de Software en U-TAD · TFG con nota 9,65/10 (≈ 3,9/4,0 GPA).",
       "eyebrow.xp": "02 · Experiencia",
-      "eyebrow.featured": "03 · Proyecto destacado",
+      "eyebrow.featured": "03 · Último proyecto",
       "eyebrow.projects": "04 · Proyectos personales",
       "eyebrow.skills": "05 · Habilidades",
       "eyebrow.edu": "06 · Formación",
@@ -1240,6 +1243,9 @@
       "mock.r1": "llamar hoy",
       "mock.r2": "cliente repetidor",
       "mock.r3": "recuperar",
+      "mock.c1": "Organizador A",
+      "mock.c2": "Organizador B",
+      "mock.c3": "Organizador C",
       "mock.note": "Vista ilustrativa — todas las cifras y nombres de clientes son ficticios.",
       "proj1.yr": "2026 · TFG · herramienta de seguridad con IA",
       "proj1.p": "Mi Trabajo de Fin de Grado (TFG): un sistema de análisis de vulnerabilidades con machine learning (Random Forest) y NLP para predecir la probabilidad de explotación de CVEs. Pipeline de datos automatizado desde NVD, Exploit-DB y GitHub, con un modelo de scoring propio que supera al CVSS estándar para priorización en Blue Teams.",
@@ -1272,6 +1278,98 @@
       "edu1.p": "U-TAD, Centro Universitario de Tecnología y Arte Digital · Madrid",
       "edu1.tfg": "TFG: CVE Intelligence Analyzer — nota 9,65/10 (≈ 3,9/4,0 GPA)",
       "edu2.h3": "Bachillerato Internacional (IB)"
+    },
+    de: {
+      "role": "software engineer · cybersecurity + KI",
+      "meta.loc": "Madrid, Spanien",
+      "meta.edu": "U-TAD · Abschluss 2026",
+      "nav.about": "über mich",
+      "nav.xp": "erfahrung",
+      "nav.featured": "letztes projekt",
+      "nav.projects": "projekte",
+      "nav.skills": "skills",
+      "nav.edu": "ausbildung",
+      "langs.title": "Sprachen",
+      "langs.es": "Spanisch",
+      "langs.en": "Englisch",
+      "langs.de": "Deutsch",
+      "langs.native": "Muttersprache",
+      "theme.note": "// passt sich deinem hellen / dunklen Theme an",
+      "hero.h2": "Ich entwickle <em>sichere, intelligente</em> Software — vom Threat Model bis zum fertigen Produkt.",
+      "hero.p1": "Software Engineer, frisch graduiert an der U-TAD mit Spezialisierung auf <strong>Cybersecurity</strong> und praktischer Erfahrung in Schwachstellenanalysen bei PwC sowie angewandtem Machine Learning in der Industrie. Ich arbeite am liebsten dort, wo sich Sicherheit, Daten und Produkt treffen: Workflows mit ML und LLMs automatisieren und aus rohen APIs Tools bauen, die Menschen täglich nutzen.",
+      "hero.p2": "Solides Fundament in Full-Stack-Entwicklung und Cloud-Infrastruktur; ich baue Software, die secure by design ist und vom ersten Tag an nützlich.",
+      "tag1": "cybersecurity & forensik",
+      "tag3": "full-stack-entwicklung",
+      "vis.caption": "ziehen zum Drehen · Label anklicken zum Erkunden",
+      "pop.go": "Zur Sektion ↓",
+      "pop.about": "Frisch graduierter Software Engineer — Cybersecurity + KI. Starte hier.",
+      "pop.xp": "Cybersecurity-Consulting bei PwC, angewandte KI in der Industrie und Event-Netzwerke.",
+      "pop.featured": "Commercial-Intelligence-Plattform auf der Holded API — mein neuestes Produkt.",
+      "pop.projects": "CVE Intelligence Analyzer (Bachelorarbeit · 9.65/10), AWS-Microservices, Full-Stack und Game Dev.",
+      "pop.skills": "Security, Python · Java · C/C++, ML & LLMs, AWS & Docker, SQL & NoSQL.",
+      "pop.edu": "B.Sc. Software Engineering an der U-TAD · Bachelorarbeit: 9.65/10 (≈ 3.9/4.0 GPA).",
+      "eyebrow.xp": "02 · Erfahrung",
+      "eyebrow.featured": "03 · Letztes Projekt",
+      "eyebrow.projects": "04 · Persönliche Projekte",
+      "eyebrow.skills": "05 · Skills",
+      "eyebrow.edu": "06 · Ausbildung",
+      "xp1.title": "Cyber Security Consultant (Teilzeit)",
+      "xp1.p": "Mitarbeit an Schwachstellenanalysen, Sicherheitsaudits und Risikomanagement für Unternehmenskunden. Unterstützung des Cybersecurity-Teams bei der Analyse von Bedrohungen, der Sicherstellung von Compliance und der Erstellung technischer Berichte zur Risikominimierung und zum Schutz sensibler Daten.",
+      "xp2.title": "Junior AI Developer",
+      "xp2.org": "Event-Tech-Startup · vertraulich",
+      "xp2.p": "Entwicklung und Integration von Machine-Learning-Modellen und LLMs zur Prozessautomatisierung und Optimierung von Workflows. Zusammenarbeit mit dem Engineering-Team bei Datenverarbeitung, Modelltraining und Deployment KI-gestützter Software.",
+      "xp3.title": "Event Network Specialist",
+      "xp3.p": "Verantwortlich für Netzwerkinfrastruktur und Konnektivität bei Live-Events: Aufbau, Konfiguration und Troubleshooting von Routern, Switches und Access Points für sicheren, hochverfügbaren Internetzugang bei grossen Besucherzahlen.",
+      "feat.flag": "letztes projekt",
+      "feat.h3": "Commercial-Intelligence-Plattform auf Basis der Holded API",
+      "feat.p": "Full-Stack-Anwendung für ein Event-Ticketing-Unternehmen (unter NDA) auf Basis der <strong>Holded ERP API</strong>. Sie automatisiert die Rechnungsverwaltung und verwandelt rohe Abrechnungsdaten in Vertriebsintelligenz: Das Sales-Team weiss genau, welche Event-Kunden wann und warum kontaktiert werden sollten.",
+      "feat.li1": "Automatischer Rechnungsimport und -abgleich über einen rate-limitierten Holded-API-Client",
+      "feat.li2": "Kunden-Dashboards: Rankings, KPIs und Umsatzanalysen pro Event-Veranstalter",
+      "feat.li3": "Erkennung von Stammkunden und Rückgewinnungslisten zur Reaktivierung früherer Veranstalter",
+      "feat.li4": "Follow-up-Queues und Alerts, die dem Vertrieb zeigen, wen er als Nächstes anrufen sollte",
+      "feat.li5": "Deployment mit Docker hinter nginx; 31 automatisierte Backend-Tests",
+      "mock.title": "vertrieb · follow-up-konsole",
+      "mock.k1": "rechnungen synchronisiert",
+      "mock.k2": "offene follow-ups",
+      "mock.k3": "wiederkehrende veranstalter",
+      "mock.r1": "heute anrufen",
+      "mock.r2": "stammkunde",
+      "mock.r3": "zurückgewinnen",
+      "mock.c1": "Veranstalter A",
+      "mock.c2": "Veranstalter B",
+      "mock.c3": "Veranstalter C",
+      "mock.note": "Illustrative Vorschau — alle Zahlen und Kundennamen sind fiktiv.",
+      "proj1.yr": "2026 · Bachelorarbeit · KI-Security-Tool",
+      "proj1.p": "Meine Bachelorarbeit: ein Schwachstellenanalyse-System mit Machine Learning (Random Forest) und NLP zur Vorhersage der Exploit-Wahrscheinlichkeit von CVEs. Automatisierte Datenpipeline aus NVD, Exploit-DB und GitHub mit eigenem Scoring-Modell, das den CVSS-Standard bei der Blue-Team-Priorisierung übertrifft.",
+      "proj1.stat": "Bachelorarbeit: Note 9.65/10 (≈ 3.9/4.0 GPA) · 82% Genauigkeit · Python · Scikit-learn",
+      "proj2.yr": "2025 · cloud-architektur",
+      "proj2.h3": "Cloud-native modulare App",
+      "proj2.p": "Microservices-basierte Anwendung, entworfen und deployed auf AWS, mit containerisierten Services und REST-APIs über den gesamten Stack.",
+      "proj3.yr": "2025 · full-stack",
+      "proj3.h3": "Full-Stack-Webanwendung",
+      "proj3.p": "Voll funktionsfähige Webanwendung, von Grund auf gebaut — Frontend- und Backend-Architektur komplett in eigener Verantwortung.",
+      "proj3.stat": "frontend + backend, im Alleingang",
+      "proj4.yr": "2024 · spieleentwicklung",
+      "proj4.h3": "Battle-Royale-Spiel",
+      "proj4.p": "Komplettes Videospiel in Java, mit fortgeschrittenem objektorientiertem Design und State-Management.",
+      "proj4.stat": "Java · OOP · State Machines",
+      "sk1.h3": "Sicherheit",
+      "sk1.i1": "Cybersecurity & Forensik",
+      "sk1.i2": "Schwachstellenanalyse",
+      "sk1.i3": "Sicherheitsaudits",
+      "sk1.i4": "Risiko & Compliance",
+      "sk2.h3": "Sprachen & Entwicklung",
+      "sk2.i6": "Full-Stack-Web",
+      "sk3.h3": "KI & Daten",
+      "sk3.i2": "LLM-Integration",
+      "sk4.h3": "Cloud & Arbeitsweise",
+      "sk4.i3": "REST-APIs",
+      "sk4.i4": "Klare Kommunikation",
+      "sk4.i5": "Proaktiver Teamplayer",
+      "edu1.h3": "B.Sc. Software Engineering — Spezialisierung Cybersecurity",
+      "edu1.p": "U-TAD, University Center of Technology and Digital Art · Madrid",
+      "edu1.tfg": "Bachelorarbeit: CVE Intelligence Analyzer — Note 9.65/10 (≈ 3.9/4.0 GPA)",
+      "edu2.h3": "International Baccalaureate (IB) Diploma"
     }
   };
 
@@ -1297,7 +1395,8 @@
   });
   var saved = null;
   try { saved = localStorage.getItem("lang"); } catch (e) {}
-  setLang(saved || ((navigator.language || "en").toLowerCase().indexOf("es") === 0 ? "es" : "en"));
+  var navLang = (navigator.language || "en").toLowerCase();
+  setLang(saved || (navLang.indexOf("es") === 0 ? "es" : navLang.indexOf("de") === 0 ? "de" : "en"));
 
   /* ---------------- collapsibles (experience) ---------------- */
   document.querySelectorAll(".xp-head").forEach(function (head) {
@@ -1354,23 +1453,38 @@
 
     function rgba(c, a) { return "rgba(" + c[0] + "," + c[1] + "," + c[2] + "," + a + ")"; }
 
-    // fibonacci sphere nodes
-    var N = 110;
-    var nodes = [];
-    var golden = Math.PI * (3 - Math.sqrt(5));
-    for (var i = 0; i < N; i++) {
-      var y = 1 - (i / (N - 1)) * 2;
-      var rad = Math.sqrt(1 - y * y);
-      var th = golden * i;
-      nodes.push({ x: Math.cos(th) * rad, y: y, z: Math.sin(th) * rad, hot: i % 9 === 0 });
-    }
-    // edges between close nodes
-    var edges = [];
-    for (var a = 0; a < N; a++) {
-      for (var b = a + 1; b < N; b++) {
-        var dx = nodes[a].x - nodes[b].x, dy = nodes[a].y - nodes[b].y, dz = nodes[a].z - nodes[b].z;
-        if (Math.sqrt(dx * dx + dy * dy + dz * dz) < 0.42) edges.push([a, b]);
+    // dotted globe geometry
+    var dots = [];
+    for (var lat = -80; lat <= 80; lat += 8) {
+      var phi = lat * Math.PI / 180;
+      var ringR = Math.cos(phi);
+      var steps = Math.max(6, Math.round(44 * ringR));
+      for (var li = 0; li < steps; li++) {
+        var lam = (li / steps) * Math.PI * 2 + ((lat / 8) % 2 ? Math.PI / steps : 0);
+        dots.push({ x: Math.cos(phi) * Math.cos(lam), y: Math.sin(phi), z: Math.cos(phi) * Math.sin(lam) });
       }
+    }
+    // arcs travelling across the globe
+    var arcs = [];
+    function randPoint() {
+      var u = Math.random() * 2 - 1, th2 = Math.random() * Math.PI * 2;
+      var rr = Math.sqrt(1 - u * u);
+      return { x: rr * Math.cos(th2), y: u, z: rr * Math.sin(th2) };
+    }
+    function spawnArc() {
+      if (arcs.length >= 7) return;
+      var pa = randPoint(), pb = randPoint();
+      var d = pa.x * pb.x + pa.y * pb.y + pa.z * pb.z;
+      if (d > 0.55) return;
+      arcs.push({ a: pa, b: pb, t: 0, hot: Math.random() < 0.35, lift: 0.2 + 0.28 * (1 - d) / 2 });
+    }
+    function arcPoint(arc, t) {
+      var x = arc.a.x + (arc.b.x - arc.a.x) * t;
+      var y = arc.a.y + (arc.b.y - arc.a.y) * t;
+      var z = arc.a.z + (arc.b.z - arc.a.z) * t;
+      var m = Math.sqrt(x * x + y * y + z * z) || 1;
+      var s = (1 + arc.lift * Math.sin(Math.PI * t)) / m;
+      return { x: x * s, y: y * s, z: z * s };
     }
     // interactive section hubs
     function norm(x, y, z) {
@@ -1386,8 +1500,9 @@
       { v: norm(0.3, 0.9, -0.3), section: "education", titleKey: "nav.edu", popKey: "pop.edu" }
     ];
     var hubLabels = {
-      en: { about: "about", experience: "experience", featured: "featured", projects: "projects", skills: "skills", education: "education" },
-      es: { about: "sobre m\u00ed", experience: "experiencia", featured: "destacado", projects: "proyectos", skills: "habilidades", education: "formaci\u00f3n" }
+      en: { about: "about", experience: "experience", featured: "latest project", projects: "projects", skills: "skills", education: "education" },
+      es: { about: "sobre m\u00ed", experience: "experiencia", featured: "último proyecto", projects: "proyectos", skills: "habilidades", education: "formaci\u00f3n" },
+      de: { about: "über mich", experience: "erfahrung", featured: "letztes projekt", projects: "projekte", skills: "skills", education: "ausbildung" }
     };
     var pop = document.querySelector(".vis-pop");
     var activeHub = null;
@@ -1419,7 +1534,7 @@
       }
     }
     function renderStatic() { draw(16); positionChips(); }
-    function curLang() { return document.documentElement.lang === "es" ? "es" : "en"; }
+    function curLang() { var l = document.documentElement.lang; return I18N[l] ? l : "en"; }
     function refreshPop() {
       if (!activeHub) return;
       var d = I18N[curLang()];
@@ -1457,12 +1572,7 @@
       if (reduced) renderStatic();
     });
 
-    // travelling pulses along edges
-    var pulses = [];
-    function spawnPulse() {
-      if (edges.length) pulses.push({ e: edges[(Math.random() * edges.length) | 0], t: 0 });
-      if (pulses.length > 5) pulses.shift();
-    }
+
 
     var rotY = 0.6, rotX = 0.35, velY = 0.0028, dragging = false, lastX = 0, lastY = 0;
     var rotTarget = null, downX = 0, downY = 0, movedDrag = false;
@@ -1547,48 +1657,55 @@
         ctx.fill();
       }
 
-      // edges
-      var proj = nodes.map(project);
-      for (var e = 0; e < edges.length; e++) {
-        var p1 = proj[edges[e][0]], p2 = proj[edges[e][1]];
-        var depth = (p1.z + p2.z) / 2; // -1 back .. 1 front
-        var alpha = 0.05 + (depth + 1) * 0.11;
-        ctx.beginPath();
-        ctx.moveTo(p1.x, p1.y);
-        ctx.lineTo(p2.x, p2.y);
-        ctx.strokeStyle = rgba(colors.accent, alpha);
-        ctx.lineWidth = 0.6 + (depth + 1) * 0.45;
-        ctx.stroke();
-      }
-
-      // pulses travelling along edges
-      for (var pi = pulses.length - 1; pi >= 0; pi--) {
-        var pu = pulses[pi];
-        pu.t += dt * 0.0012;
-        if (pu.t >= 1) { pulses.splice(pi, 1); continue; }
-        var pa = proj[pu.e[0]], pb = proj[pu.e[1]];
-        var px = pa.x + (pb.x - pa.x) * pu.t;
-        var py = pa.y + (pb.y - pa.y) * pu.t;
-        ctx.beginPath();
-        ctx.arc(px, py, 2.6, 0, Math.PI * 2);
-        ctx.fillStyle = rgba(colors.signal, 0.9 * (1 - Math.abs(pu.t - 0.5) * 1.6));
-        ctx.fill();
-      }
-
-      // nodes
-      for (var n = 0; n < N; n++) {
-        var p = proj[n];
+      // dotted globe
+      for (var n = 0; n < dots.length; n++) {
+        var p = project(dots[n]);
         var depth01 = (p.z + 1) / 2;
-        var size = (nodes[n].hot ? 2.4 : 1.5) * (0.55 + depth01 * 0.8);
         ctx.beginPath();
-        ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
-        if (nodes[n].hot) {
-          var tw = 0.55 + 0.45 * Math.sin(frame * 0.045 + n);
-          ctx.fillStyle = rgba(colors.signal, 0.35 + 0.55 * tw * depth01);
-        } else {
-          ctx.fillStyle = rgba(colors.accent, 0.25 + 0.65 * depth01);
-        }
+        ctx.arc(p.x, p.y, 0.8 + depth01 * 1.1, 0, Math.PI * 2);
+        ctx.fillStyle = rgba(colors.accent, 0.10 + depth01 * 0.45);
         ctx.fill();
+      }
+
+      // glowing arcs
+      for (var ai = arcs.length - 1; ai >= 0; ai--) {
+        var arc = arcs[ai];
+        arc.t += dt * 0.00042;
+        if (arc.t >= 1.15) { arcs.splice(ai, 1); continue; }
+        var head = Math.min(arc.t, 1);
+        var tail = Math.max(head - 0.34, 0);
+        var col = arc.hot ? colors.signal : colors.accent;
+        var endFade = arc.t > 1 ? (1.15 - arc.t) / 0.15 : 1;
+        var SEG = 22;
+        var prev = null;
+        for (var si = 0; si <= SEG; si++) {
+          var tt = tail + (head - tail) * (si / SEG);
+          var q = project(arcPoint(arc, tt));
+          if (prev) {
+            var fade = si / SEG;
+            var dAvg = ((q.z + prev.z) / 2 + 1) / 2;
+            ctx.beginPath();
+            ctx.moveTo(prev.x, prev.y);
+            ctx.lineTo(q.x, q.y);
+            ctx.strokeStyle = rgba(col, fade * (0.15 + dAvg * 0.75) * endFade);
+            ctx.lineWidth = 0.8 + fade * 1.4;
+            ctx.stroke();
+          }
+          prev = q;
+        }
+        if (arc.t <= 1) {
+          var hq = project(arcPoint(arc, head));
+          var hd01 = (hq.z + 1) / 2;
+          ctx.beginPath();
+          ctx.arc(hq.x, hq.y, 2 + hd01 * 1.6, 0, Math.PI * 2);
+          ctx.fillStyle = rgba(col, 0.5 + hd01 * 0.5);
+          ctx.fill();
+          var qa = project(arc.a);
+          ctx.beginPath();
+          ctx.arc(qa.x, qa.y, 1.6, 0, Math.PI * 2);
+          ctx.fillStyle = rgba(col, 0.5 * (1 - head));
+          ctx.fill();
+        }
       }
 
       // hub anchor glows (DOM chips sit on top of these)
@@ -1616,7 +1733,7 @@
       } else if (!dragging && !activeHub) {
         rotY += velY * (dt / 16);
       }
-      if (frame % 70 === 0) spawnPulse();
+      if (frame % 46 === 0) spawnArc();
       if (frame % 240 === 0) refreshColors();
       draw(dt);
       positionChips();
@@ -1633,6 +1750,8 @@
     }
 
     resize();
+    for (var pk = 0; pk < 10 && arcs.length < 3; pk++) spawnArc();
+    arcs.forEach(function (a3) { a3.t = 0.35 + Math.random() * 0.3; });
     renderStatic();
     window.addEventListener("resize", function () { resize(); renderStatic(); });
     if (reduced) {
