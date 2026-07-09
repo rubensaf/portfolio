@@ -345,6 +345,24 @@
     gap: 36px;
     align-items: center;
   }
+  .term-line {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .term-line .prompt { color: var(--signal); }
+  .cursor {
+    display: inline-block;
+    width: 8px;
+    height: 1em;
+    background: var(--accent);
+    vertical-align: text-bottom;
+    animation: blink 1.1s steps(1) infinite;
+  }
+  @keyframes blink { 50% { opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .cursor { animation: none; } }
+
   .hero h2 {
     margin: 0 0 20px;
     font-size: clamp(1.5rem, 3vw, 2.15rem);
@@ -946,6 +964,7 @@
     <section class="hero" id="about">
       <div class="hero-grid">
         <div>
+          <div class="term-line"><span class="prompt">ruben</span>:~$ <span id="typed">whoami</span><span class="cursor" aria-hidden="true"></span></div>
           <h2 data-i18n="hero.h2" data-i18n-html>I build <em>secure, intelligent</em> software — from threat models to shipped products.</h2>
           <p data-i18n="hero.p1" data-i18n-html>Software Engineer, recently graduated from U-TAD with a specialization in <strong>cybersecurity</strong> — trained in building secure environments and optimizing systems and workflows. I like working where security, data and product meet: automating processes with ML and LLMs, and turning raw APIs into tools people actually use every day.</p>
           <p data-i18n="hero.p2">Solid foundation in full-stack development and cloud infrastructure; driven to ship things that are secure by design and useful from day one.</p>
@@ -1996,6 +2015,18 @@
     });
   }, { threshold: 0.1, rootMargin: "0px 0px -8% 0px" });
   document.querySelectorAll(".reveal, .stagger").forEach(function (el) { io.observe(el); });
+
+  /* typewriter */
+  var typed = document.getElementById("typed");
+  if (typed) {
+    var full = typed.textContent;
+    typed.textContent = "";
+    var ti = 0;
+    var iv = setInterval(function () {
+      typed.textContent = full.slice(0, ++ti);
+      if (ti >= full.length) clearInterval(iv);
+    }, 90);
+  }
 
   /* parallax on the featured dashboard panel */
   var mock = document.querySelector(".mock");
